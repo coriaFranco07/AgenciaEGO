@@ -1,0 +1,440 @@
+{% extends "AgenciaApp/base.html" %}
+
+<!--     <h1>Detalle del Auto</h1>
+    <h2>{{ auto.nombre }}</h2>
+    <h2>${{ auto.precio }}</h2>
+    {% for modelo in auto.modelo.all %}
+    {{ modelo.año }}
+    {% endfor %}
+    {% for marca in auto.marca.all %}
+    {{ marca.nombre }}
+    {% endfor %} -->
+
+{% block content %}
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Auto</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+:root {
+  --primary: #ec994b;
+  --white: #ffffff;
+  --bg: #f5f5f5;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 1440px) {
+  html {
+    zoom: 1.5;
+  }
+}
+
+@media (min-width: 2560px) {
+  html {
+    zoom: 1.7;
+  }
+}
+
+@media (min-width: 3860px) {
+  html {
+    zoom: 2.5;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 1.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background: #797979;
+  transition: all 0.5s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #222224;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+body {
+  font-size: 1.6rem;
+  background: var(--bg);
+}
+
+.container {
+  max-width: 124rem;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.section-heading {
+  font-size: 3rem;
+  color: var(--primary);
+  padding: 2rem 0;
+}
+
+#tranding {
+  padding: 4rem 0;
+}
+
+@media (max-width:1440px) {
+  #tranding {
+    padding: 7rem 0;
+  }
+}
+
+#tranding .tranding-slider {
+  height: 32rem;
+  padding: 2rem 0;
+  position: relative;
+}
+
+@media (max-width:500px) {
+  #tranding .tranding-slider {
+    height: 45rem;
+  }
+}
+
+.tranding-slide {
+    width: 30rem; /* Reducir el ancho de los cuadros */
+   height: 32rem; /* Reducir la altura de los cuadros */
+}
+
+@media (max-width:500px) {
+  .tranding-slide {
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+  .tranding-slide .tranding-slide-img img {
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+}
+
+.tranding-slide .tranding-slide-img img {
+    max-width: 100%; /* Establecer ancho máximo para que las imágenes se ajusten proporcionalmente */
+  height: auto; /* Permitir que la altura se ajuste automáticamente */
+  border-radius: 2rem;
+  object-fit: cover;
+  
+}
+
+.tranding-slide .tranding-slide-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.tranding-slide-content .food-price {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: var(--white);
+}
+
+.tranding-slide-content .tranding-slide-content-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  color: var(--white);
+}
+
+.food-rating {
+  padding-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.rating ion-icon {
+  color: var(--primary);
+}
+
+.swiper-slide-shadow-left,
+.swiper-slide-shadow-right {
+  display: none;
+}
+
+.tranding-slider-control {
+  position: relative;
+  bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tranding-slider-control .swiper-button-next {
+  left: 58% !important;
+  transform: translateX(-58%) !important;
+}
+
+@media (max-width:990px) {
+  .tranding-slider-control .swiper-button-next {
+    left: 70% !important;
+    transform: translateX(-70%) !important;
+  }
+}
+
+@media (max-width:450px) {
+  .tranding-slider-control .swiper-button-next {
+    left: 80% !important;
+    transform: translateX(-80%) !important;
+  }
+}
+
+@media (max-width:990px) {
+  .tranding-slider-control .swiper-button-prev {
+    left: 30% !important;
+    transform: translateX(-30%) !important;
+  }
+}
+
+@media (max-width:450px) {
+  .tranding-slider-control .swiper-button-prev {
+    left: 20% !important;
+    transform: translateX(-20%) !important;
+  }
+}
+
+.tranding-slider-control .slider-arrow {
+  background: var(--white);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  left: 42%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.tranding-slider-control .slider-arrow ion-icon {
+  font-size: 2rem;
+  color: #222224;
+}
+
+.tranding-slider-control .slider-arrow::after {
+  content: '';
+}
+
+.tranding-slider-control .swiper-pagination {
+  position: relative;
+  width: 15rem;
+  bottom: 1rem;
+}
+
+.tranding-slider-control .swiper-pagination .swiper-pagination-bullet {
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.tranding-slider-control .swiper-pagination .swiper-pagination-bullet-active {
+  background: var(--primary);
+}
+
+.tranding-slide-content h1,
+.tranding-slide-content-bottom p {
+  font-size: 1.4rem; /* Establecer un tamaño de fuente más pequeño */
+}
+    </style>
+
+</head>
+<body>
+
+
+
+    <div class="row mt-4">
+        <div class="col-md-5" style="margin-left: 105px; ">
+            <img src="{{ auto.imagen.url }}" class="img-fluid" alt="{{ auto.nombre }}" style="height: 400px; max-width: 500px; border-radius: 20px;">
+        </div>
+        <div class="col-md-5" style=" margin-left: 80px; color: black; ">
+            <br><br><br>
+            <h4><strong>{{ auto.nombre }}</strong></h4>
+            <div>
+                <h1><strong>Preparada para cualquier desafio</strong></h1>
+            </div><br><br>
+            <div>
+                <p>{{ auto.dscAuto }}</p>
+            </div>
+        </div>
+    </div><br>
+
+
+    <section id="tranding">
+        <div class="container">
+          <div class="swiper tranding-slider">
+            <div class="swiper-wrapper">
+              <!-- Slide-start -->
+              <div class="swiper-slide tranding-slide">
+                <div class="tranding-slide-img">
+                    <img src="/media/auto/volante.jpg" alt="Tranding">
+                </div>
+                <div class="tranding-slide-content">
+                    <h1 class="food-price">Volantes</h1>
+                    <div class="tranding-slide-content-bottom" > <!-- Ajustar la posición lateral -->
+                        <h5 class="food-name" style="color: #222224; position: relative; top: -70px;"> <!-- Ajustar la posición vertical -->
+                            <strong> {{ auto.dscVolante }}</strong>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+              <!-- Slide-end -->
+              <!-- Slide-start -->
+
+              <div class="swiper-slide tranding-slide">
+                <div class="tranding-slide-img">
+                  <img src="/media/auto/piston.jpg" alt="Tranding">
+                </div>
+                <div class="tranding-slide-content">
+                  <h1 class="food-price">Piston</h1>
+                  <div class="tranding-slide-content-bottom">
+                    <h5 class="food-name" style="color: #222224; position: relative; top: -70px;"> <!-- Ajustar la posición vertical -->
+                        <strong>{{ auto.dscPiston }}</strong> 
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide-end -->
+              <!-- Slide-start -->
+              <div class="swiper-slide tranding-slide">
+                <div class="tranding-slide-img">
+                  <img src="/media/auto/motorAuto.jpg" alt="Tranding">
+                </div>
+                <div class="tranding-slide-content">
+                  <h1 class="food-price">Motor</h1>
+                  <div class="tranding-slide-content-bottom">
+                    <h5 class="food-name" style="color: #222224; position: relative; top: -70px;"> <!-- Ajustar la posición vertical -->
+                        <strong>{{ auto.dscMotor }}</strong> 
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide-end -->
+              <!-- Slide-start -->
+              <div class="swiper-slide tranding-slide">
+                <div class="tranding-slide-img">
+                  <img src="/media/auto/mantenimiento_2.jpg" alt="Tranding">
+                </div>
+                <div class="tranding-slide-content">
+                  <h1 class="food-price">Mantenimiento</h1>
+                  <div class="tranding-slide-content-bottom">
+                    <h5 class="food-name" style="color: #222224; position: relative; top: -60px;"> <!-- Ajustar la posición vertical -->
+                        <strong> {{ auto.dscMantenimiento }}</strong>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="tranding-slider-control">
+              <div class="swiper-button-prev slider-arrow">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </div>
+              <div class="swiper-button-next slider-arrow">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+            
+          </div>
+        </div>
+    </section><br>
+
+
+
+
+    <div class="row mt-4">
+      <div class="col-md-5" style="margin-left: 80px; color: black;">
+          <div>
+              <h1><strong>Nuestras Estructuras</strong></h1>
+          </div><br>
+          <div>
+              <h3>{{ auto.dscEstructura }}</h3>
+          </div>
+      </div>
+      <div class="col-md-5" style="margin-right: 50px;">
+          <img src="{{ auto.imagenEstructura.url }}" class="img-fluid" alt="{{ auto.nombre }}" style="height: 250px; width: 450px; border-radius: 20px;">
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row mt-4">
+        <div class="col-md-5" style="margin-left: 65px;">
+            <img src="{{ auto.imagenNeumatico.url }}" class="img-fluid" alt="{{ auto.nombre }}" style="height: 250px; width: 480px; border-radius: 20px;">
+        </div>
+        <div class="col-md-5" style="margin-left: 30px; color: black;">
+            <br>
+            <div>
+                <h1><strong>Nuestros Neumáticos</strong></h1>
+            </div><br>
+            <div>
+                <h3>{{ auto.dscNeumatico }}</h3>
+            </div>
+        </div>
+    </div>
+  
+  
+    <br>
+
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+            var TrandingSlider = new Swiper('.tranding-slider', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                loop: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2.5,
+                },
+                pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                },
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                }
+            });
+    </script>
+    
+
+</body>
+</html>
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% block content %}
+<br><br>
+<h3 style="text-align: center; color: black;"><strong>Agregar Marca</strong></h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'automovil:crear_marca_api' %}" enctype="multipart/form-data" class="auto-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="nombre"><strong style="color: rgb(0, 0, 0);">Nombre de Marca:</strong></label>
+                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de Marca">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Crear Marca</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

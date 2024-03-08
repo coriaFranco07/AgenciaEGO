@@ -1,0 +1,128 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% block content %}
+<h3 style="text-align: center; color: black;"><strong>Editar Auto</strong></h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'automovil:editar_auto_api' auto.id %}" enctype="multipart/form-data" class="auto-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="nombre"><strong style="color: rgb(0, 0, 0);">Nombre del auto:</strong></label>
+                    <input type="text" name="nombre" id="nombre" class="form-control" value="{{ auto.nombre }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="auto"><strong style="color: rgb(0, 0, 0);">Dsc Auto:</strong></label>
+                    <input type="text" name="auto" id="auto" class="form-control" value="{{ auto.dscAuto }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="motor"><strong style="color: rgb(0, 0, 0);">Dsc Motor:</strong></label>
+                    <input type="text" name="motor" id="motor" class="form-control" value="{{ auto.dscMotor }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="volante"><strong style="color: rgb(0, 0, 0);">Dsc Volante:</strong></label>
+                    <input type="text" name="volante" id="volante" class="form-control" value="{{ auto.dscVolante }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="piston"><strong style="color: rgb(0, 0, 0);">Dsc Piston:</strong></label>
+                    <input type="text" name="piston" id="piston" class="form-control" value="{{ auto.dscPiston }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="mant"><strong style="color: rgb(0, 0, 0);">Dsc Mantenimiento:</strong></label>
+                    <input type="text" name="mant" id="mant" class="form-control" value="{{ auto.dscMantenimiento }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="neumatico"><strong style="color: rgb(0, 0, 0);">Dsc Neumatico:</strong></label>
+                    <input type="text" name="neumatico" id="neumatico" class="form-control" value="{{ auto.dscNeumatico }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="estructura"><strong style="color: rgb(0, 0, 0);">Dsc Estructura:</strong></label>
+                    <input type="text" name="estructura" id="estructura" class="form-control" value="{{ auto.dscEstructura }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio"><strong style="color: rgb(0, 0, 0);">Precio del auto:</strong></label>
+                    <input type="text" name="precio" id="precio" class="form-control" value="{{ auto.precio }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="marca"><strong style="color: rgb(0, 0, 0);">Marca:</strong></label>
+                    <select name="marca" id="marca" class="form-control">
+                        {% for marca in marcas %}
+                            <option value="{{ marca.id }}" {% if auto.marca.id == marca.id %} selected {% endif %}>{{ marca.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modelo"><strong style="color: rgb(0, 0, 0);">Modelo:</strong></label>
+                    <select name="modelo" id="modelo" class="form-control">
+                        {% for modelo in modelos %}
+                            <option value="{{ modelo.id }}" {% if auto.modelo.id == modelo.id %} selected {% endif %}>{{ modelo.año }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" name="disponibilidad" id="disponibilidad" class="form-check-input" {% if auto.disponibilidad %} checked {% endif %}>
+                        <label for="disponibilidad" class="form-check-label"><strong style="color: rgb(0, 0, 0);">Disponible</strong></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen"><strong style="color: rgb(0, 0, 0);">Imagen Auto:</strong></label>
+                    <input type="file" name="imagen" id="imagen" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen2"><strong style="color: rgb(0, 0, 0);">Imagen Volante:</strong></label>
+                    <input type="file" name="imagen2" id="imagen2" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.volante.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen3"><strong style="color: rgb(0, 0, 0);">Imagen Piston:</strong></label>
+                    <input type="file" name="imagen3" id="imagen3" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.piston.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen4"><strong style="color: rgb(0, 0, 0);">Imagen Mantenimiento:</strong></label>
+                    <input type="file" name="imagen4" id="imagen4" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.mantenimiento.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen5"><strong style="color: rgb(0, 0, 0);">Imagen Motor:</strong></label>
+                    <input type="file" name="imagen5" id="imagen5" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.motor.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen6"><strong style="color: rgb(0, 0, 0);">Imagen Neumatico:</strong></label>
+                    <input type="file" name="imagen6" id="imagen6" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.neumatico.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen7"><strong style="color: rgb(0, 0, 0);">Imagen Estructura:</strong></label>
+                    <input type="file" name="imagen7" id="imagen7" class="form-control-file" accept="image/*">
+                    <img src="{{ auto.imagen.estructura.url }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

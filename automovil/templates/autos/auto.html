@@ -1,0 +1,131 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+    <br>
+    <h2 style="text-align: center; color: rgb(0, 0, 0);"><strong>Descubri todos los modelos</strong></h2>
+<!--     <div class="container mt-5 text-center" style="background-color: rgba(249, 252, 252, 0.3); width: 50%; margin: 0 auto;">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="GET" action="" class="row g-3">
+                    <div class="col-auto">
+                        <label for="marca" class="col-form-label" style="color: rgb(0, 0, 0);"><strong>Ordenar Por:</strong></label>
+                    </div>
+                    <div class="col-auto">
+                        <label for="marca" class="col-form-label" style="color: rgb(0, 0, 0);"><strong>-Marca:</strong></label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select form-select-lg" id="marca" name="marca" style="border-radius: 20px; padding: 10px;">
+                            <option value="" selected>Todas las marcas</option>
+                            {% for marca in marcas %}
+                                <option value="{{ marca.slug }}" {% if marca.slug == request.GET.marca %} selected {% endif %}>{{ marca.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-auto">
+                        <label for="modelo" class="col-form-label" style="color: rgb(0, 0, 0);"><strong>-Modelo:</strong></label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select form-select-lg" id="modelo" name="modelo" style="border-radius: 20px; padding: 10px;">
+                            <option value="" selected>Todos los modelos</option>
+                            {% for modelo in modelos %}
+                                <option value="{{ modelo.slug }}" {% if modelo.slug == request.GET.modelo %} selected {% endif %}>{{ modelo.año }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </form>
+                <hr style="border-top: 2px solid black;">
+            </div>
+        </div>
+    </div> --><br>
+
+
+    <div class="container mt-5 text-center" style="width: 100%; margin: 0 auto;">
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <form id="filterForm" method="GET" action="" class="row g-3 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label for="marca" class="col-form-label" style="color: rgb(0, 0, 0);"><strong>Filtrar Por:</strong></label>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'automovil:auto' %}" class="col-form-label" style="color: rgb(139, 138, 138);"><strong>Todos</strong></a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'automovil:auto' %}" class="col-form-label" style="color: rgb(139, 138, 138);"><strong>Autos</strong></a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="col-form-label" style="color: rgb(139, 138, 138);"><strong>Pickups y Comerciales</strong></a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="col-form-label" style="color: rgb(139, 138, 138);"><strong>SUVs y Crossovers</strong></a>
+                    </div>
+                    <div class="col-auto">
+                        <select id="ordenSelect" name="orden" class="form-select form-select-lg" style="border: none; padding: 10px;">
+                            <option value="" disabled selected><strong style="color: rgb(0, 0, 0);">Ordenar por:</strong> </option>
+                            <option value="precio_asc">De menor a mayor precio</option>
+                            <option value="precio_desc">De mayor a menor precio</option>
+                            <option value="año_desc">Más nuevos primero</option>
+                            <option value="año_asc">Más viejos primero</option>
+                        </select>
+                    </div>
+                </form>
+                <hr style="border-top: 2px solid rgb(110, 110, 110);">
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container mt-5">
+        <div class="row">
+            {% for auto in autos %}
+                {% if auto.disponibilidad == 1 %}
+                <div class="col-md-4 mb-2">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h3 class="card-title"><strong>{{ auto.nombre }}</strong></h3> 
+                            {% for modelo in auto.modelo.all %}
+                            <div class="row">
+                                <div class="col-3">{{ modelo.año }}</div>|
+                                <div class="col-3">${{ auto.precio }}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <img src="{{ auto.imagen.url }}" class="img-fluid" alt="{{ auto.nombre }}" style="height: 200px; max-width: 250px; border-radius: 10px;">
+                        <br>
+                        <div class="text-center">
+                            <a href="{% url 'automovil:ver_modelo' auto.id %}" class="btn btn-dark" style="color: white; margin-right: 150px;" ><strong>Ver Modelo</strong></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <script>
+
+        // Script para enviar el formulario al cambiar la selección del menú desplegable
+        document.getElementById("ordenSelect").addEventListener("change", function() {
+            document.getElementById("filterForm").submit();
+        });
+
+        function mostrarID(autoID) {
+        console.log("ID del auto seleccionado:", autoID);
+        // Aquí puedes realizar cualquier otra acción que necesites con el ID del auto
+        }
+        
+    </script>
+    
+    
+{% endblock %}

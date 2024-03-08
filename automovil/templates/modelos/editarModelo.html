@@ -1,0 +1,22 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% block content %}
+<br><br>
+<h3 style="text-align: center; color: black;"><strong>Agregar Modelo</strong></h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" action="{% url 'automovil:editar_modelo_api' modelo.pk %}" enctype="multipart/form-data" class="auto-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="año"><strong style="color: rgb(0, 0, 0);">Modelo:</strong></label>
+                    <input type="text" name="año" id="año" class="form-control" value="{{ modelo.año }}">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

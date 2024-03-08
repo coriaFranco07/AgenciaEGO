@@ -1,0 +1,31 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2 class="text-center" style="color: #333;"><strong>Administrar Lista de Modelos</strong></h2>
+    <a href="{% url 'automovil:agregarModelo' %}" class="btn btn-primary mb-3">Agregar Modelo</a><br><br>
+    <div class="table-responsive">
+        <table class="table table-striped" style="color: #333;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for modelo in modelos %}
+                <tr>
+                    <td>{{ modelo.id }}</td>
+                    <td>{{ modelo.año }}</td>
+                    <td>
+                        <a href="{% url 'automovil:editarModelo' modelo.id %}" class="btn btn-warning">Editar Modelo</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

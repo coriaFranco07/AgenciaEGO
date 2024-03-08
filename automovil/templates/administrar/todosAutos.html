@@ -1,0 +1,69 @@
+{% extends "AgenciaApp/base.html" %}
+
+{% block content %}
+    <div class="container"><br>
+        <h2 class="text-center" style="color: rgb(0, 0, 0);"><strong> Administrar Lista de Autos</strong></h2>
+        <a href="{% url 'automovil:agregar' %}" class="btn btn-info">Agregar Auto</a><br><br>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Imagen</th>
+                        <th>Precio</th>
+                        <th>Disponibilidad</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody style="color: rgb(0, 0, 0);">
+                    {% for auto in autos %}
+                    <tr>
+                        
+                        <td>{{ auto.nombre }}</td>
+                        <td>{{ auto.marca.0 }}</td>
+                        <td>{{ auto.modelo.0 }}</td> <!-- Obtener el año del modelo usando el diccionario modelos_anios -->
+                        <td><img src="{{ auto.imagen }}" alt="{{ auto.nombre }}" class="img-thumbnail" style="width: 150px; height: 100px;"></td>
+                        <td>${{ auto.precio }}</td>
+                        <td>{% if auto.disponibilidad %}Disponible{% else %}No Disponible{% endif %}</td>
+                        <td>
+                            <a href="{% url 'automovil:editar' auto.id %}" class="btn btn-warning">Editar Auto</a>
+
+                            <button class="btn btn-danger" onclick="confirmarEliminar({{ auto.id }})">Eliminar Auto</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function confirmarEliminar(autoId) {
+            if (confirm("¿Estás seguro de que quieres eliminar este auto?")) {
+                fetch(`/autos/api/eliminar/${autoId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("El auto se eliminó exitosamente.");
+                        // Aquí puedes actualizar la lista de autos o hacer cualquier otra acción deseada
+                    } else {
+                        alert("Hubo un error al eliminar el auto.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Hubo un error al eliminar el auto.");
+                });
+            }
+        }
+    </script>
+
+{% endblock %}
